@@ -1,14 +1,12 @@
 #pragma once
 
-class Pawn : public Piece
+class Queen : public Piece
 {
 public:
-	Pawn(COLOR color, Cell* pos);
-	~Pawn();
+	Queen(COLOR color, Cell* pos);
+	~Queen();
 
+public:
 	void SetAccesibleCellsToPlayable(Board*) override;
-
-private:
-	
 };
 

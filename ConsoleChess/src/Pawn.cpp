@@ -1,15 +1,6 @@
 #include "pch.h"
 
-Pawn::Pawn(COLOR color, Cell* cell) : Piece(color, cell) {
-	switch (color) {
-	case WHITE:
-		_legalMoves = { Position(0, -1) };
-		break;
-	case BLACK:
-		_legalMoves = { Position(0, 1) };
-		break;
-	}
-	
+Pawn::Pawn(COLOR color, Cell* cell) : Piece(color, cell) {	
 	_symbol = 'p';
 }
 
@@ -17,14 +8,29 @@ Pawn::~Pawn() {
 
 }
 
-bool Pawn::CheckDest(Cell* target) {
-	/*Position operand;
-	operand = target->pos - _posCell->pos;
-	for (Position legal : _legalMoves) {
-		if (legal == operand) {
-			return true;
-		}
+void Pawn::SetAccesibleCellsToPlayable(Board* board) {
+	int offset = _color == WHITE ? -1 : 1;
+
+	// check for forward cell first
+	Cell* target = board->GetCellAt(_posCell->pos.x, _posCell->pos.y + offset);
+
+	if (target == nullptr) return;
+
+	if (target->occupedBy == nullptr)
+		target->playable = true;
+
+	// the two ones in diagonale then
+	target = board->GetCellAt(_posCell->pos.x +1 , _posCell->pos.y + offset);
+	if (target != nullptr) {
+		if (target->occupedBy != nullptr)
+			if (target->occupedBy->_color != _color)
+				target->playable = true;
 	}
-	return false;*/
-	return true;
+
+	target = board->GetCellAt(_posCell->pos.x -1 , _posCell->pos.y + offset);
+	if (target != nullptr) {
+		if (target->occupedBy != nullptr)
+			if (target->occupedBy->_color != _color)
+				target->playable = true;
+	}
 }

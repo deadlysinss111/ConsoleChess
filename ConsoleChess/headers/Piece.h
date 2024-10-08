@@ -7,15 +7,10 @@ public:
 	~Piece();
 	//virtual ~Piece();
 
-protected:
-	std::vector<Position> _legalMoves;
-
 public:
 	void MoveTo(Cell*);
 	void MoveTo(int x, int y) {};
-	virtual bool CheckDest(Cell*) { return false; };
-	//virtual bool CheckDest(int x, int y) = 0;
-	virtual void SetAccesibleCellsToPlayable(Board*);
+	virtual void SetAccesibleCellsToPlayable(Board*) = 0;
 
 public:
 	COLOR _color;

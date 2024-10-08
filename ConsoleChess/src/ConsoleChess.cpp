@@ -1,5 +1,7 @@
 #include "pch.h"
 
+
+
 void ChangePlayerTurn(COLOR* turn) {
     if (*turn == WHITE) *turn = BLACK;
     else *turn = WHITE;
@@ -14,13 +16,22 @@ int main()
     COLOR playerTurn = WHITE;
     Cell* currentTarget = nullptr;
 
+#ifdef _DEMO
+    int playsLeft = 4;
+#endif
+
     while (runing) {
         system("cls");
         SetConsoleCursorPosition(hConsole, COORD{0, 0});
         board.ResetColor();
         board.Display(&hConsole);
-        SetConsoleCursorPosition(hConsole, pos);
+
+        std::string str("\nturn player is : ");
+        str.append(playerTurn == WHITE ? "white" : "black");
+        LOG(str);
         
+        SetConsoleCursorPosition(hConsole, pos);
+
         int input = _getch();
 
         switch (input) {
@@ -48,6 +59,11 @@ int main()
                 board.ResetPlayableCells();
                 currentTarget = nullptr;
                 ChangePlayerTurn(&playerTurn);
+
+#ifdef _DEMO
+                --playsLeft;
+#endif
+
                 break;
 
             case C_WHITE:
@@ -72,5 +88,26 @@ int main()
         default:
             break;
         }
+
+#ifdef _DEMO
+        if (playsLeft <= 0) {
+            system("cls");
+            SetConsoleCursorPosition(hConsole, COORD{ 0, 0 });
+            board.ResetColor();
+            board.Display(&hConsole);
+
+            SetConsoleCursorPosition(hConsole, COORD{ 0, 10 });
+            std::cout << "You reched the maximum content of the demo version. 10 boxes for the full version available on steam :)";
+            runing = false;
+        }
+#endif
+
     }
+
+#ifdef _DEBUG
+
+    _CrtDumpMemoryLeaks();
+
+#endif
+    return 0;
 }

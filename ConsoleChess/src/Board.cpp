@@ -10,6 +10,33 @@ Board::~Board() {
 }
 
 void Board::Init() {
+#ifdef _LITE
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			Cell cell(Position(i, j));
+
+			// Dispose pieces
+			switch (j) {
+			case 0:
+				cell.occupedBy = new Pawn(BLACK, &(_board[i + 8 * j]));
+				break;
+			case 1:
+				cell.occupedBy = new Pawn(BLACK, &(_board[i + 8 * j]));
+				break;
+			case 6:
+				cell.occupedBy = new Pawn(WHITE, &(_board[i + 8 * j]));
+				break;
+			case 7:
+				cell.occupedBy = new Pawn(WHITE, &(_board[i + 8 * j]));
+				break;
+			default:
+				break;
+			}
+			_board[i + 8 * j] = cell;
+
+		}
+}
+#else
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
 			Cell cell(Position(i, j));
@@ -20,6 +47,24 @@ void Board::Init() {
 				switch (i) {
 				case 0:
 					cell.occupedBy = new Rook(BLACK, &(_board[i + 8 * j]));
+					break;
+				case 1:
+					cell.occupedBy = new Knight(BLACK, &(_board[i + 8 * j]));
+					break;
+				case 2:
+					cell.occupedBy = new Bishop(BLACK, &(_board[i + 8 * j]));
+					break;
+				case 3:
+					cell.occupedBy = new Bishop(BLACK, &(_board[i + 8 * j]));
+					break;
+				case 4:
+					cell.occupedBy = new Queen(BLACK, &(_board[i + 8 * j]));
+					break;
+				case 5:
+					cell.occupedBy = new Bishop(BLACK, &(_board[i + 8 * j]));
+					break;
+				case 6:
+					cell.occupedBy = new Knight(BLACK, &(_board[i + 8 * j]));
 					break;
 				case 7:
 					cell.occupedBy = new Rook(BLACK, &(_board[i + 8 * j]));
@@ -33,6 +78,32 @@ void Board::Init() {
 				cell.occupedBy = new Pawn(WHITE, &(_board[i + 8 * j]));
 				break;
 			case 7:
+				switch (i) {
+				case 0:
+					cell.occupedBy = new Rook(WHITE, &(_board[i + 8 * j]));
+					break;
+				case 1:
+					cell.occupedBy = new Knight(WHITE, &(_board[i + 8 * j]));
+					break;
+				case 2:
+					cell.occupedBy = new Bishop(WHITE, &(_board[i + 8 * j]));
+					break;
+				case 3:
+					cell.occupedBy = new Bishop(WHITE, &(_board[i + 8 * j]));
+					break;
+				case 4:
+					cell.occupedBy = new Queen(WHITE, &(_board[i + 8 * j]));
+					break;
+				case 5:
+					cell.occupedBy = new Bishop(WHITE, &(_board[i + 8 * j]));
+					break;
+				case 6:
+					cell.occupedBy = new Knight(WHITE, &(_board[i + 8 * j]));
+					break;
+				case 7:
+					cell.occupedBy = new Rook(WHITE, &(_board[i + 8 * j]));
+					break;
+				}
 				break;
 			default:
 				break;
@@ -41,6 +112,8 @@ void Board::Init() {
 
 		}
 	}
+#endif
+
 	ResetColor();
 }
 
@@ -56,21 +129,15 @@ bool Board::MoveFromTo(int baseX, int baseY, int destX, int destY) {
 
 	if (base->occupedBy == nullptr) return false;
 
-	if (base->occupedBy->CheckDest(dest)) {
-		base->occupedBy->MoveTo(dest);
-		return true;
-	}
-	return false;
+	base->occupedBy->MoveTo(dest);
+	return true;
 }
 
 bool Board::MoveFromTo(Cell* base, Cell* dest) {
 	if (base->occupedBy == nullptr) return false;
 
-	if (base->occupedBy->CheckDest(dest)) {
-		base->occupedBy->MoveTo(dest);
-		return true;
-	}
-	return false;
+	base->occupedBy->MoveTo(dest);
+	return true;
 }
 
 void Board::Display(HANDLE* hConsole) {

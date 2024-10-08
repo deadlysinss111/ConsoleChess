@@ -1,33 +1,16 @@
 #include "pch.h"
 
-Rook::Rook(COLOR color, Cell* cell) : Piece(color, cell) {
-	_symbol = 'r';
+Bishop::Bishop(COLOR color, Cell* cell) : Piece(color, cell) {
+	_symbol = 'b';
 }
 
-Rook::~Rook() {
+Bishop::~Bishop() {
 
 }
-void Rook::SetAccesibleCellsToPlayable(Board* board) {
-	//lets go up first
+void Bishop::SetAccesibleCellsToPlayable(Board* board) {
+	//lets go up right first
 	int offset = 1;
-	Cell* target = board->GetCellAt(_posCell->pos.x, _posCell->pos.y - offset);
-	while(target != nullptr){
-		if (target->occupedBy != nullptr) {
-			if (target->occupedBy->_color != _color) {
-				target->playable = true;
-			}
-			target = nullptr;
-		}
-		else {
-			target->playable = true;
-			++offset;
-			target = board->GetCellAt(_posCell->pos.x, _posCell->pos.y + offset);
-		}
-	}
-
-	// down
-	offset = 1;
-	target = board->GetCellAt(_posCell->pos.x, _posCell->pos.y + offset);
+	Cell* target = board->GetCellAt(_posCell->pos.x + offset, _posCell->pos.y - offset);
 	while (target != nullptr) {
 		if (target->occupedBy != nullptr) {
 			if (target->occupedBy->_color != _color) {
@@ -38,13 +21,30 @@ void Rook::SetAccesibleCellsToPlayable(Board* board) {
 		else {
 			target->playable = true;
 			++offset;
-			target = board->GetCellAt(_posCell->pos.x, _posCell->pos.y + offset);
+			target = board->GetCellAt(_posCell->pos.x + offset, _posCell->pos.y - offset);
 		}
 	}
 
-	// right
+	// up left
 	offset = 1;
-	target = board->GetCellAt(_posCell->pos.x + offset, _posCell->pos.y);
+	target = board->GetCellAt(_posCell->pos.x - offset, _posCell->pos.y - offset);
+	while (target != nullptr) {
+		if (target->occupedBy != nullptr) {
+			if (target->occupedBy->_color != _color) {
+				target->playable = true;
+			}
+			target = nullptr;
+		}
+		else {
+			target->playable = true;
+			++offset;
+			target = board->GetCellAt(_posCell->pos.x - offset, _posCell->pos.y - offset);
+		}
+	}
+
+	// down right
+	offset = 1;
+	target = board->GetCellAt(_posCell->pos.x + offset, _posCell->pos.y + offset);
 	while (target != nullptr) {
 		if (target->occupedBy != nullptr) {
 			if (target->occupedBy->_color != _color) {
@@ -59,9 +59,9 @@ void Rook::SetAccesibleCellsToPlayable(Board* board) {
 		}
 	}
 
-	// left
+	// down left
 	offset = 1;
-	target = board->GetCellAt(_posCell->pos.x - offset, _posCell->pos.y);
+	target = board->GetCellAt(_posCell->pos.x - offset, _posCell->pos.y + offset);
 	while (target != nullptr) {
 		if (target->occupedBy != nullptr) {
 			if (target->occupedBy->_color != _color) {
