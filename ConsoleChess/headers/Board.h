@@ -9,6 +9,7 @@ public:
 
 public:
 	Cell* _board;
+	bool _gameOver;
 
 public:
 	Cell* GetCellAt(int x, int y);

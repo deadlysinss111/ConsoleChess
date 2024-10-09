@@ -2,6 +2,7 @@
 
 Board::Board() {
 	_board = new Cell[64];
+	_gameOver = false;
 	Init();
 }
 
@@ -127,14 +128,15 @@ bool Board::MoveFromTo(int baseX, int baseY, int destX, int destY) {
 	Cell* base = GetCellAt(baseX, baseY);
 	Cell* dest = GetCellAt(destX, destY);
 
-	if (base->occupedBy == nullptr) return false;
-
-	base->occupedBy->MoveTo(dest);
-	return true;
+	return MoveFromTo(base, dest);
 }
 
 bool Board::MoveFromTo(Cell* base, Cell* dest) {
 	if (base->occupedBy == nullptr) return false;
+
+	if (dest->occupedBy != nullptr) {
+		dest->occupedBy->OnDeath(this);
+	}
 
 	base->occupedBy->MoveTo(dest);
 	return true;

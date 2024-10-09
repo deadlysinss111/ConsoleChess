@@ -26,3 +26,7 @@ void King::SetAccesibleCellsToPlayable(Board* board) {
 		}
 	}
 }
+
+void King::OnDeath(Board* board) {
+	board->_gameOver = true;
+}

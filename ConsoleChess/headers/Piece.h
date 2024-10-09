@@ -9,8 +9,9 @@ public:
 
 public:
 	void MoveTo(Cell*);
-	void MoveTo(int x, int y) {};
+	//void MoveTo(int x, int y) {};
 	virtual void SetAccesibleCellsToPlayable(Board*) = 0;
+	virtual void OnDeath(Board*) {};
 
 public:
 	COLOR _color;

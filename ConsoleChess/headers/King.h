@@ -8,6 +8,7 @@ public:
 
 public:
 	void SetAccesibleCellsToPlayable(Board*) override;
+	void OnDeath(Board*) override;
 
 };
 

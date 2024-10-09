@@ -2,6 +2,7 @@
 
 Pawn::Pawn(COLOR color, Cell* cell) : Piece(color, cell) {	
 	_symbol = 'p';
+	_didMove = false;
 }
 
 Pawn::~Pawn() {
@@ -32,5 +33,15 @@ void Pawn::SetAccesibleCellsToPlayable(Board* board) {
 		if (target->occupedBy != nullptr)
 			if (target->occupedBy->_color != _color)
 				target->playable = true;
+	}
+
+	if (false == _didMove) {
+		int offset = _color == WHITE ? -2 : 2;
+		Cell* target = board->GetCellAt(_posCell->pos.x, _posCell->pos.y + offset);
+
+		if (target == nullptr) return;
+
+		if (target->occupedBy == nullptr)
+			target->playable = true;
 	}
 }

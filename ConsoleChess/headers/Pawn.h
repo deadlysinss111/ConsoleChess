@@ -9,5 +9,8 @@ public:
 public:
 	void SetAccesibleCellsToPlayable(Board*) override;
 
+private:
+	bool _didMove;
+
 };
 

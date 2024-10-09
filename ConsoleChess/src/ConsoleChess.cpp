@@ -1,6 +1,7 @@
 #include "pch.h"
 
 
+void RunConsole();
 
 void ChangePlayerTurn(COLOR* turn) {
     if (*turn == WHITE) *turn = BLACK;
@@ -9,6 +10,22 @@ void ChangePlayerTurn(COLOR* turn) {
 
 int main()
 {
+
+    RunConsole();
+
+
+#ifdef _DEBUG
+    _CrtDumpMemoryLeaks();
+#endif
+
+    return 0;
+}
+
+
+
+// CONSOLE VERSION
+
+void RunConsole() {
     Board board;
     bool runing = true;
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -22,14 +39,14 @@ int main()
 
     while (runing) {
         system("cls");
-        SetConsoleCursorPosition(hConsole, COORD{0, 0});
+        SetConsoleCursorPosition(hConsole, COORD{ 0, 0 });
         board.ResetColor();
         board.Display(&hConsole);
 
         std::string str("\nturn player is : ");
         str.append(playerTurn == WHITE ? "white" : "black");
         LOG(str);
-        
+
         SetConsoleCursorPosition(hConsole, pos);
 
         int input = _getch();
@@ -49,7 +66,7 @@ int main()
             break;
         case CONFIRM: {
             Cell* target = board.GetCellAt(pos.X / 2, pos.Y);
-            
+
             switch (target->color) {
             case C_EMPTY:
                 break;
@@ -84,9 +101,21 @@ int main()
                 break;
             }
         }
-            break;
+                    break;
         default:
             break;
+        }
+
+        if (board._gameOver) {
+            system("cls");
+            SetConsoleCursorPosition(hConsole, COORD{ 0, 0 });
+            board.ResetColor();
+            board.Display(&hConsole);
+
+            std::cout << (playerTurn != WHITE ? "white" : "black") << " Won, GG no re" << std::endl;
+            runing = false;
+                
+            LOG(str);
         }
 
 #ifdef _DEMO
@@ -103,11 +132,4 @@ int main()
 #endif
 
     }
-
-#ifdef _DEBUG
-
-    _CrtDumpMemoryLeaks();
-
-#endif
-    return 0;
 }
