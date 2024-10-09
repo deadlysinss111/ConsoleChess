@@ -64,3 +64,4 @@ class King;
 #include "Bishop.h"
 #include "Knight.h"
 #include "Queen.h"
+#include "King.h"

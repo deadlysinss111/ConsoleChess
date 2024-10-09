@@ -225,7 +225,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEMO;_DEBUG;_CONSOLE;_LOG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEMO;_CONSOLE;_LOG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -285,6 +285,7 @@
   </ItemDefinitionGroup>
   <!-- End of my custom stuff -->
   <ItemGroup>
+    <ClCompile Include="src\King.cpp" />
     <ClCompile Include="src\Queen.cpp" />
     <ClCompile Include="src\Knight.cpp" />
     <ClCompile Include="src\Bishop.cpp" />
@@ -307,6 +308,7 @@
     <ClInclude Include="headers\Rook.h" />
     <ClInclude Include="headers\Knight.h" />
     <ClInclude Include="headers\Queen.h" />
+    <ClInclude Include="headers\King.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

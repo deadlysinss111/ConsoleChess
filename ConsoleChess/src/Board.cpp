@@ -55,7 +55,7 @@ void Board::Init() {
 					cell.occupedBy = new Bishop(BLACK, &(_board[i + 8 * j]));
 					break;
 				case 3:
-					cell.occupedBy = new Bishop(BLACK, &(_board[i + 8 * j]));
+					cell.occupedBy = new King(BLACK, &(_board[i + 8 * j]));
 					break;
 				case 4:
 					cell.occupedBy = new Queen(BLACK, &(_board[i + 8 * j]));
@@ -89,7 +89,7 @@ void Board::Init() {
 					cell.occupedBy = new Bishop(WHITE, &(_board[i + 8 * j]));
 					break;
 				case 3:
-					cell.occupedBy = new Bishop(WHITE, &(_board[i + 8 * j]));
+					cell.occupedBy = new King(WHITE, &(_board[i + 8 * j]));
 					break;
 				case 4:
 					cell.occupedBy = new Queen(WHITE, &(_board[i + 8 * j]));

@@ -1,10 +1,10 @@
 #pragma once
 
-class Pawn : public Piece
+class King : public Piece
 {
 public:
-	Pawn(COLOR color, Cell* pos);
-	~Pawn();
+	King(COLOR color, Cell* pos);
+	~King();
 
 public:
 	void SetAccesibleCellsToPlayable(Board*) override;
